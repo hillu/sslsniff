@@ -117,6 +117,6 @@ void TargetedCertificateManager::dump() {
   std::list<Certificate*>::iterator i;
 
   for(i=certificates.begin(); i != certificates.end(); ++i) 
-    std::cout << "Certificate: " << (*i)->getCert()->name << std::endl;
+    std::cout << "Certificate: " << X509_NAME_oneline(X509_get_subject_name((*i)->getCert()), NULL, 0) << std::endl;
 
 }

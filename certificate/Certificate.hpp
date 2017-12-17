@@ -92,7 +92,7 @@ private:
   }
 
   void parseCommonName(X509 *cert) {
-    std::string distinguishedName(cert->name);
+    std::string distinguishedName(X509_NAME_oneline(X509_get_subject_name(cert), NULL, 0));
     std::string::size_type cnIndex = distinguishedName.find("CN=");
 
     if (cnIndex == std::string::npos) throw BadCertificateException();

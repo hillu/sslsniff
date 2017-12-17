@@ -47,7 +47,9 @@ void SessionCache::removeSessionId(unsigned char* id, int idLength) {
 }
 
 int SessionCache::setNewSessionId(SSL *s, SSL_SESSION *session) {
-  return setNewSessionId(s, session, session->session_id, session->session_id_length);
+  unsigned int id_length;
+  const unsigned char *id = SSL_SESSION_get_id(session, &id_length);
+  return setNewSessionId(s, session, (unsigned char*)id, id_length);
 }
 
 int SessionCache::setNewSessionId(SSL *s, SSL_SESSION *session, 
@@ -117,8 +119,8 @@ SSL_SESSION * SessionCache::getSessionId(SSL *s, unsigned char *id, int idLength
 
 // Trampoline Functions.  Yay C.
 
-SSL_SESSION * SessionCache::getSessionIdTramp(SSL *s, unsigned char *id, int idLength, int *ref) {
-  return SessionCache::getInstance()->getSessionId(s, id, idLength, ref);
+SSL_SESSION * SessionCache::getSessionIdTramp(SSL *s, const unsigned char *id, int idLength, int *ref) {
+  return SessionCache::getInstance()->getSessionId(s, (unsigned char*)id, idLength, ref);
 }
 
 int SessionCache::setNewSessionIdTramp(SSL *s, SSL_SESSION *session) {

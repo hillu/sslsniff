@@ -49,7 +49,7 @@ class SessionCache {
 
 public:
   static SessionCache* getInstance();
-  static SSL_SESSION * getSessionIdTramp(SSL *s, unsigned char *id, int idLength, int *ref);
+  static SSL_SESSION * getSessionIdTramp(SSL *s, const unsigned char *id, int idLength, int *ref);
   static int setNewSessionIdTramp(SSL *s, SSL_SESSION *session);
 
   int setNewSessionId(SSL *s, SSL_SESSION *session);
